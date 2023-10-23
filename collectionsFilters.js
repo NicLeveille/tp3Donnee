@@ -23,10 +23,15 @@ export default class CollectionFilter {
 
         }
         if (this.params.field != undefined) {
+            let fields = this.params.field.split(',');
+            console.log(fields);
             let data = [];
-            this.objectsList.forEach(element => {
-                data.push(element[`${this.params.field}`]);
+            fields.forEach(element =>{
+                this.objectsList.forEach(e => {
+                    data.push(e[`${element}`]);
+                });
             });
+            
 
             this.objectsList = data.filter((value, index) => data.indexOf(value) === index);
         }
@@ -34,9 +39,7 @@ export default class CollectionFilter {
         if (this.params.Title != undefined) {
             this.filterName("Title", this.params.Title)
         }
-        if (this.params.Title != undefined) {
-            this.filterName("Title", this.params.Title)
-        }
+
         if (this.params.limit != undefined && this.params.offset != undefined) {
 
             //Sort les items selon l'id
@@ -78,12 +81,13 @@ export default class CollectionFilter {
         }
         else if (filters.charAt(filters.length - 1) == "*") {
             let searchValue = filters.slice(0, -1);
-            this.objectsList = this.objectsList.filter(b => b[`${type}`].toLowerCase().endsWith(searchValue.toLowerCase()));
+            this.objectsList = this.objectsList.filter(b => b[`${type}`].toLowerCase().startsWith(searchValue.toLowerCase()));
         }
         else if (filters.charAt(0) == "*") {
 
             let searchValue = filters.slice(1);
-            this.objectsList = this.objectsList.filter(b => b[`${type}`].toLowerCase().startsWith(searchValue.toLowerCase()));
+            console.log(searchValue);
+            this.objectsList = this.objectsList.filter(b => b[`${type}`].toLowerCase().endsWith(searchValue.toLowerCase()));
         }
         else {
             this.objectsList = this.objectsList.filter(b => b[`${type}`].toLowerCase() == filters.toLowerCase())
