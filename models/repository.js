@@ -15,9 +15,12 @@ export default class Repository {
         this.objectsList = null;
         this.model = ModelClass;
         this.objectsName = ModelClass.getClassName() + "s";
-        this.objectsFile = `./jsonFiles/${this.objectsName}.json`;
+      //Erreur de Majuscules lors de la lecture du fichier json, j'ai alors hardcode le nom du fichier pour ne pas tout briser le code de depart.
+        //this.objectsFile = `./jsonFiles/${this.objectsName}.json`;
+      this.objectsFile = `./jsonFiles/bookmarks.json`;
         this.initEtag();
         this.cached = cached;
+      console.log(this.objectsFile);
     }
     initEtag() {
         if (this.objectsName in repositoryEtags)
@@ -142,6 +145,7 @@ export default class Repository {
         if(params == null){
             return objectsList;
         }
+      console.log(objectsList);
         let bindedDatas = [];
         if (objectsList)
             for (let data of objectsList) {
@@ -149,6 +153,7 @@ export default class Repository {
             };
 
         let collectionFilter = new CollectionFilter(this.objects(), params, this.model);
+     
         bindedDatas = collectionFilter.Filter();
         return bindedDatas;
     } alueMatch(value, searchValue) {
